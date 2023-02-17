@@ -1,0 +1,102 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3166,         94]
+NotebookOptionsPosition[      2873,         81]
+NotebookOutlinePosition[      3213,         96]
+CellTagsIndexPosition[      3170,         93]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Pad\[EAcute]", " ", "Poles", " ", "with", " ", "machine", " ", 
+    "precision", " ", "for", " ", "Comparison", " ", "in", " ", "Rational", 
+    " ", "Krylov", " ", "Methods"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"SincPade", "[", 
+      RowBox[{"z_", ",", "n_"}], "]"}], ":=", 
+     RowBox[{"Evaluate", "[", 
+      RowBox[{"PadeApproximant", "[", 
+       RowBox[{
+        RowBox[{"Sinc", "[", "z", "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"z", ",", "0", ",", 
+          RowBox[{"{", 
+           RowBox[{"n", ",", "n"}], "}"}]}], "}"}]}], "]"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"padepts", "[", "n_", "]"}], ":=", 
+     RowBox[{"ComplexExpand", "[", 
+      RowBox[{"z", "/.", 
+       RowBox[{"NSolve", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Denominator", "[", 
+           RowBox[{"SincPade", "[", 
+            RowBox[{"z", ",", "n"}], "]"}], "]"}], "\[Equal]", "0"}], ",", 
+         RowBox[{"{", "z", "}"}], ",", 
+         RowBox[{"VerifySolutions", "\[Rule]", "True"}], ",", 
+         RowBox[{"WorkingPrecision", "\[Rule]", "MachinePrecision"}]}], 
+        "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"poles", " ", "=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"padepts", "[", "n", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", "2", ",", "20"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"SetDirectory", "[", 
+     RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<sincpadepoles.mat\>\"", ",", 
+      RowBox[{"PadRight", "[", "poles", "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.884338565050448*^9, 3.884338612586595*^9}, {
+   3.884338644126586*^9, 3.8843386563758717`*^9}, {3.8843387068517017`*^9, 
+   3.8843387782306767`*^9}, 3.884338809626095*^9, {3.884338872708919*^9, 
+   3.884338902003867*^9}, {3.8843389439091883`*^9, 3.8843389602599697`*^9}, {
+   3.884339134835245*^9, 3.884339166681286*^9}},
+ CellLabel->
+  "In[106]:=",ExpressionUUID->"315f99f2-3218-4907-9df9-876db99aac50"]
+},
+WindowSize->{1915, 920},
+WindowMargins->{{-2052, Automatic}, {-239, Automatic}},
+FrontEndVersion->"12.0 for Linux x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 2311, 59, 170, "Input",ExpressionUUID->"315f99f2-3218-4907-9df9-876db99aac50"]
+}
+]
+*)
+
