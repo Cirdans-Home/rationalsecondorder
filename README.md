@@ -2,6 +2,23 @@
 
 Rational Krylov Methods for the Integration of Second Order Differential Equations
 
+## External codes
+
+The code contained in this repository makes use of some [Chebfun functions](https://www.chebfun.org/). To add to your Matlab environment simply run the following command:
+```
+unzip('https://github.com/chebfun/chebfun/archive/master.zip')
+movefile('chebfun-master', 'chebfun'), addpath(fullfile(cd,'chebfun')), savepath
+```
+Among the methodologies available for calculating exponential sums, the [expmv code](https://github.com/higham/expmv) is used. 
+This is added as a Git submodule to the repository. By cloning the repository the code is not added automatically, this can be 
+done by going to the appropriate directory and doing `git pull`, or from the root directory with
+```
+git submodule init
+git submodule update
+```
+Information about this code can be found at:
+- A. H. Al-Mohy and N. J. Higham, "[Computing the action of the matrix exponential, with an application to exponential integrators](https://doi.org/10.1137/100788860)" SIAM J. Sci. Comput., 33(2):488--511, 2011.
+
 ## Contributors
 - Lidia Aceto
 - Fabio Durastante
