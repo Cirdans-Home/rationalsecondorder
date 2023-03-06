@@ -7,5 +7,8 @@ types of poles.
 - `genlagpol.m` Laguerre based poles,
 - `genlagpolsym.m` Doubling of the Laguerre based poles,
 - `genlagexppol.m` Laguerre based poles from the exponential expansion,
-- `genlappoles.m` Poles obtained from the inversion of the Laplace transform with the optimization parabolic contour on the spectra interval. It requires the spectral interval.
-- `genspougepoles.m` poles obtained from the Spouge approximation of the Gamma(1+x) function,
+- `genpadeexppol.m` Padé poles for the exp(-z) function,
+- `cf.m` Poles and residual of the Carathéodory-Fejér rational approximation to the exponential,
+- `sincfourier.m` Computation of `sinc(A)v` via inversion of the Fourier transform (exponential sums),
+- `sincm.m` Rational Krylov method for the `sinc(A)v` computation,
+- `testingwithtimings.m`, `testofpoles.m`, `plotresults.m` execute the tests in the paper.
