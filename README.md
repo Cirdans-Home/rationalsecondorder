@@ -4,10 +4,17 @@ Rational Krylov Methods for the Integration of Second Order Differential Equatio
 
 ## External codes
 
-The code contained in this repository makes use of some [Chebfun functions](https://www.chebfun.org/). To add to your Matlab environment simply run the following command:
+The code contained in this repository makes use of some [Chebfun functions](https://www.chebfun.org/). To add to your MATLAB 
+environment simply run the following command from the MATLAB command window:
 ```
 unzip('https://github.com/chebfun/chebfun/archive/master.zip')
 movefile('chebfun-master', 'chebfun'), addpath(fullfile(cd,'chebfun')), savepath
+```
+The other fundamental ingredient is the [Rational Krylov toolbox](http://guettel.com/rktoolbox/), if you do not have it already
+you can automatically download and install it, by simply copying and pasting the following two lines to your MATLAB command window:
+```
+unzip('http://guettel.com/rktoolbox/rktoolbox.zip'); 
+cd('rktoolbox'); addpath(fullfile(cd)); savepath
 ```
 Among the methodologies available for calculating exponential sums, the [expmv code](https://github.com/higham/expmv) is used. 
 This is added as a Git submodule to the repository. By cloning the repository the code is not added automatically, this can be 
