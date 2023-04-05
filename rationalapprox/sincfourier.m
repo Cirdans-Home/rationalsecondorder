@@ -111,7 +111,7 @@ switch upper(exptype)
         % (n,n) best approximation r to exp(z) on R^{-}.
         V = rat_krylov(-A, v, -poles.'); % Build rational krylov subspace
         vk = V'*v;
-        Ap = V'*A*V;
+        Ap = -V'*A*V;
         for i=1:N
             Ak = 1i*x(i)*Ap;
             ytemp = V*(expm(Ak)*vk);
@@ -123,7 +123,7 @@ switch upper(exptype)
         tic;
         V = rat_krylov(-A, v, poles.'); % Build rational krylov subspace
         vk = V'*v;
-        Ap = V'*A*V;
+        Ap = -V'*A*V;
         for i=1:N
             Ak = 1i*x(i)*Ap;
             ytemp = V*(expm(Ak)*vk);
