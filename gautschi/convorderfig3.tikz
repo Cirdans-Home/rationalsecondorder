@@ -1,0 +1,61 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.602in,
+height=3.506in,
+at={(0.772in,0.473in)},
+scale only axis,
+x dir=reverse,
+xmode=log,
+xmin=0.0001,
+xmax=0.1,
+xminorticks=true,
+xlabel style={font=\color{white!15!black}},
+xlabel={h},
+ymode=log,
+ymin=5.61428432532164e-10,
+ymax=0.01,
+yminorticks=true,
+ylabel style={font=\color{white!15!black}},
+ylabel={Relative Error},
+axis background/.style={fill=white},
+xmajorgrids,
+xminorgrids,
+ymajorgrids,
+yminorgrids,
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot [color=black, line width=2.0pt, mark=o, mark options={solid, black}]
+  table[row sep=crcr]{%
+0.1	0.000637723065180562\\
+0.01	8.62187702633534e-06\\
+0.001	5.63096700255167e-08\\
+0.0001	5.61428432532164e-10\\
+};
+\addlegendentry{Gautschi}
+
+\addplot [color=black, dashed, line width=2.0pt, mark=*, mark options={solid, black}]
+  table[row sep=crcr]{%
+0.1	0.01\\
+0.01	0.0001\\
+0.001	1e-06\\
+0.0001	1e-08\\
+};
+\addlegendentry{Order 2}
+
+\node[right, align=left]
+at (axis cs:0.1,0.001) {  16 Poles};
+\node[right, align=left]
+at (axis cs:0.01,0) {  2 Poles};
+\node[right, align=left]
+at (axis cs:0.001,0) {  2 Poles};
+\node[right, align=left]
+at (axis cs:0,0) {  2 Poles};
+\end{axis}
+\end{tikzpicture}%
