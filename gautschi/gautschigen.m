@@ -37,6 +37,8 @@ if ~iscolumn(yprime)
     yprime = yprime.';
 end
 
+hbar = waitbar(0,"Integration underway");
+
 %% Generate the time-grid
 if length(t) > 2
     T = t;
@@ -62,6 +64,7 @@ if strcmpi(mfunoptions.type,"direct")
     % Initial time step
     V(:,1) = sigma(h^2*A)*V(:,1) + 0.5*h*( psiA*odefun(T(1),Y(:,1)) );
     for i=1:nt-1 %% Time loop
+        waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
         % Matrix function computation
         if abs((T(i+1)-T(i))-h) > 10*eps
             h = T(i+1)-T(i);
@@ -108,6 +111,7 @@ elseif strcmpi(mfunoptions.type,"rational")
         V(:,1) = Vk*(sigma(Vk'*(h^2*A)*Vk)*(Vk'*V(:,1)));
     end
     for i=1:nt-1 %% Time loop
+        waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
         % Matrix function computation
         h = T(i+1)-T(i);
         % Time marching done with just two step and a single matrix-function
@@ -136,6 +140,7 @@ elseif strcmpi(mfunoptions.type,"expsum")
     V(:,1) = expsumsigma(h^2*A,V(:,1),poles,x,w) ....
         + 0.5*h*( expsumpsi(h^2*A,odefun(T(1),Y(:,1)),poles,xpsi,wpsi) );
     for i=1:nt-1 %% Time loop
+        waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
         h = T(i+1)-T(i);
         % Time marching done with just two step and a single matrix-function
         % evaluation:
@@ -145,10 +150,12 @@ elseif strcmpi(mfunoptions.type,"expsum")
     end
 
 else
+    close(hbar)
     error("Unkwnown matrix-function type: %d it has to be: 'direct'," + ...
         "'rational' or 'expsum'",mfunoptions.type);
 end
 
+close(hbar)
 
 end
 
