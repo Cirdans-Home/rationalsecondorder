@@ -29,3 +29,20 @@ Information about this code can be found at:
 ## Contributors
 - Lidia Aceto
 - Fabio Durastante
+
+## Cite as
+
+The associated paper is available on arXiv, can be cited as:
+```
+@misc{aceto2023efficient,
+      title={Efficient computation of the sinc matrix function for the integration of 
+        second-order differential equations}, 
+      author={Lidia Aceto and Fabio Durastante},
+      year={2023},
+      eprint={2304.09676},
+      archivePrefix={arXiv},
+      primaryClass={math.NA}
+}
+```
+
+If you decide to use the code in a scientific publication, **also cite the related works** for the codes described in the previous section.
