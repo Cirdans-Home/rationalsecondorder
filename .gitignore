@@ -2,3 +2,5 @@
 *.asv
 rktoolbox
 chebfun
+expint
+*.tikz
