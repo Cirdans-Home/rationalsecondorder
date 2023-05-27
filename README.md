@@ -26,6 +26,9 @@ git submodule update
 Information about this code can be found at:
 - A. H. Al-Mohy and N. J. Higham, "[Computing the action of the matrix exponential, with an application to exponential integrators](https://doi.org/10.1137/100788860)" SIAM J. Sci. Comput., 33(2):488--511, 2011.
 
+For the *exponential integrators* we use the *EXPINT* package for comparisons:
+- H. Berland, B. Skaflestad, and W. M. Wright. EXPINT—a MATLAB package for exponential integrators. ACM Trans. Math. Softw., 33(1):4–es, mar 2007. ISSN 0098-3500. doi: 10.1145/1206040.1206044. URL https://doi.org/10.1145/1206040.1206044.
+
 ## Contributors
 - Lidia Aceto
 - Fabio Durastante
