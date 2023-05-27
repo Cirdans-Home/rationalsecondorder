@@ -25,6 +25,7 @@ if nargin == 0
     mfunoptions.poltype = "";       % Used only if type is rational
     mfunoptions.numpoles = 15;
     mfunoptions.expsumterms = 15;
+    mfunoptions.verbose = false;
     return
 end
 
@@ -37,8 +38,9 @@ if ~iscolumn(yprime)
     yprime = yprime.';
 end
 
-hbar = waitbar(0,"Integration underway");
-
+if (mfunoptions.verbose)
+    hbar = waitbar(0,"Integration underway");
+end
 %% Generate the time-grid
 if length(t) > 2
     T = t;
@@ -58,13 +60,19 @@ V = zeros(ndof,nt);
 
 Y(:,1) = yzero;
 V(:,1) = yprime;
+isrealyes = false;
+if isreal(yzero) && isreal(yprime)
+    isrealyes = true;
+end
 
 if strcmpi(mfunoptions.type,"direct")
     psiA = psi(h^2*A);
     % Initial time step
     V(:,1) = sigma(h^2*A)*V(:,1) + 0.5*h*( psiA*odefun(T(1),Y(:,1)) );
     for i=1:nt-1 %% Time loop
-        waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
+        if (mfunoptions.verbose)
+            waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
+        end
         % Matrix function computation
         if abs((T(i+1)-T(i))-h) > 10*eps
             h = T(i+1)-T(i);
@@ -72,8 +80,13 @@ if strcmpi(mfunoptions.type,"direct")
         end
         % Time marching done with just two step and a single matrix-function
         % evaluation:
-        Y(:,i+1) = Y(:,i) + h*V(:,i);
-        V(:,i+1) = V(:,i) + h*psiA*odefun(T(i+1),Y(:,i+1));
+        if isrealyes
+            Y(:,i+1) = real(Y(:,i) + h*V(:,i));
+            V(:,i+1) = real(V(:,i) + h*psiA*odefun(T(i+1),Y(:,i+1)));
+        else
+            Y(:,i+1) = Y(:,i) + h*V(:,i);
+            V(:,i+1) = V(:,i) + h*psiA*odefun(T(i+1),Y(:,i+1));
+        end
     end
 elseif strcmpi(mfunoptions.type,"rational")
     % We use here the Rational Krylov method. First of all we have to
@@ -105,13 +118,15 @@ elseif strcmpi(mfunoptions.type,"rational")
     if havev1 && havey1
         V(:,1) = Vk*(sigma(Vk'*(h^2*A)*Vk)*(Vk'*V(:,1))) + 0.5*h*...
             Wk*(psi(h^2*(Wk'*A*Wk))*(Wk'*ytemp));
-    elseif havey1 && ~havev1 
+    elseif havey1 && ~havev1
         V(:,1) = 0.5*h*Wk*(psi(h^2*(Wk'*A*Wk))*(Wk'*ytemp));
     elseif ~havey1 && havev1
         V(:,1) = Vk*(sigma(Vk'*(h^2*A)*Vk)*(Vk'*V(:,1)));
     end
     for i=1:nt-1 %% Time loop
-        waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
+        if (mfunoptions.verbose)
+            waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
+        end
         % Matrix function computation
         h = T(i+1)-T(i);
         % Time marching done with just two step and a single matrix-function
@@ -140,7 +155,9 @@ elseif strcmpi(mfunoptions.type,"expsum")
     V(:,1) = expsumsigma(h^2*A,V(:,1),poles,x,w) ....
         + 0.5*h*( expsumpsi(h^2*A,odefun(T(1),Y(:,1)),poles,xpsi,wpsi) );
     for i=1:nt-1 %% Time loop
-        waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
+        if (mfunoptions.verbose)
+            waitbar(i/(nt-1),hbar,sprintf("Integration underway: %d of %d",i,nt-1));
+        end
         h = T(i+1)-T(i);
         % Time marching done with just two step and a single matrix-function
         % evaluation:
@@ -150,12 +167,15 @@ elseif strcmpi(mfunoptions.type,"expsum")
     end
 
 else
-    close(hbar)
+    if (mfunoptions.verbose)
+        close(hbar)
+    end
     error("Unkwnown matrix-function type: %d it has to be: 'direct'," + ...
         "'rational' or 'expsum'",mfunoptions.type);
 end
-
-close(hbar)
+if (mfunoptions.verbose)
+    close(hbar)
+end
 
 end
 
