@@ -1,2 +1,4 @@
 # File Extensions to be ignored 
 *.asv
+./rktoolbox
+./chebfun
