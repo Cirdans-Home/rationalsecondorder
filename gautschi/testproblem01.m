@@ -21,6 +21,7 @@ for h = hval
     %% Solution with Gautschi Solver
     odefun = @(t,y) -A*y + f(t)*ones(20,1);
     mfunoptions.type = "direct";
+    mfunoptions.verbose = false;
     [T2,Y2,mfunoptions] = gautschigen(odefun,t,yzero,yprime,A,h,mfunoptions);
 
     %% Solution with Matlab solver
@@ -139,8 +140,7 @@ function n = numpadpoles(h,lmax)
 z = linspace(0,lmax,ceil(lmax));
 
 for n = 1:15
-    tolz = 2*(pi*2^(-4*n)*exp(-z.^2./(8*n+4)).*z.^2.*abs(cos(z./(8*n+4))))./...
-        ((2*n+1).*gamma(n+0.5).^2);
+    tolz = ((factorial(n)^2)/(factorial(2*n)*factorial(2*n+1)))*(z.^(2*n));
     tol = norm(tolz,"inf");
     fprintf("n = %d tol = %e h = %e \n",n,tol,h);
     if tol <= h
@@ -159,8 +159,7 @@ if ~exist("z","var")
 end
 
 for n = 1:15
-    tolz = (2*pi*4^(-n-1)*exp(- z.^2/(2*n+2) + (2*n+1)*log(z)))./...
-        (gamma(n + 3/2)^2);
+    tolz = (2^(n+1)*factorial(n)/factorial(2*n+1))^2.*z.^(2*n+1);
     tol = norm(tolz,"inf");
     fprintf("n = %d tol = %e h = %e \n",n,tol,h);
     if tol <= h
