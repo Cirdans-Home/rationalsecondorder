@@ -159,7 +159,10 @@ if ~exist("z","var")
 end
 
 for n = 1:15
-    tolz = (2^(n+1)*factorial(n)/factorial(2*n+1))^2.*z.^(2*n+1);
+    % Non-symmetric version
+    %tolz = (2^(n+1)*factorial(n)/factorial(2*n+1))^2.*z.^(2*n+1);
+    % Symmetric version
+    tolz = (n+1)/(4*n+6)*(factorial(n)/factorial(2*n+1))^2.*z.^(2*n+2);
     tol = norm(tolz,"inf");
     fprintf("n = %d tol = %e h = %e \n",n,tol,h);
     if tol <= h
